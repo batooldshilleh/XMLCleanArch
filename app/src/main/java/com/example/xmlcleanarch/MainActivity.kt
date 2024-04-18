@@ -21,9 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnLiveData.setOnClickListener {
             navigate("com.example.xmlcleanarch.screens.live_data.LiveDataActivity")
         }
-        binding.btnRoom.setOnClickListener {
-            navigate("com.example.xmlcleanarch.screens.room.RoomDBActivity")
-        }
     }
     fun navigate(className: String) {
 
