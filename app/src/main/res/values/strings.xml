@@ -3,4 +3,9 @@
     <string name="live_data">Live Data</string>
     <string name="room">Room</string>
     <string name="retrofit">Retrofit</string>
+
+    <!--Live Data-->
+    <string name="message">Show Message</string>
+    <string name="name">Enter your name</string>
+    <string name="first_message">Welcome, Name</string>
 </resources>
