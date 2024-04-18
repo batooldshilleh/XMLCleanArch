@@ -5,6 +5,36 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.live_data.LiveData">
+    tools:context=".screens.live_data.LiveDataActivity">
 
+    <Button
+        android:id="@+id/btnShowMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/message"
+        android:layout_marginBottom="70dp"/>
+    <EditText
+    android:id="@+id/etNameEnter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnShowMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/name"
+        android:layout_marginBottom="150dp"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/etNameEnter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="40dp"
+        android:text="@string/first_message"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
