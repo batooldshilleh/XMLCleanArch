@@ -8,4 +8,11 @@
     <string name="message">Show Message</string>
     <string name="name">Enter your name</string>
     <string name="first_message">Welcome, Name</string>
+
+    <!--room-->
+    <string name="note">Enter your note</string>
+    <string name="description">Description</string>
+    <string name="add">Add</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

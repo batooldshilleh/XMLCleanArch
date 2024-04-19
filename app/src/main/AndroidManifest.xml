@@ -13,6 +13,9 @@
         android:theme="@style/Theme.XMLCleanArch"
         tools:targetApi="31">
         <activity
+            android:name=".screens.room.RoomDBActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.live_data.LiveDataActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
