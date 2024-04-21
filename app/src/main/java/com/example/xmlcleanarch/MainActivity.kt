@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             navigate("com.example.xmlcleanarch.screens.live_data.LiveDataActivity")
         }
         binding.btnRoom.setOnClickListener {
-            navigate("com.example.xmlcleanarch.screens.room.RoomDBActivity")
+            navigate("com.example.xmlcleanarch.screens.roomdb.roomActivity")
         }
     }
     fun navigate(className: String) {

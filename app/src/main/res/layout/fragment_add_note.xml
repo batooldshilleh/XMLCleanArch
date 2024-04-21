@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".screens.room.AddNoteFragment">
+    tools:context=".screens.roomdb.AddNoteFragment">
 
     <EditText
         android:id="@+id/etNote"
@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/note"
+        android:hint="@string/note"
         android:layout_marginTop="200dp"/>
     <EditText
         android:id="@+id/etDescription"
@@ -22,11 +22,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etNote"
-        android:text="@string/description"
+        android:hint="@string/description"
         android:layout_marginTop="50dp"/>
 
     <Button
-        android:id="@+id/add"
+        android:id="@+id/btnAdd"
         android:layout_width="0dp"
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,5 +34,4 @@
         app:layout_constraintTop_toBottomOf="@+id/etDescription"
         android:layout_margin="30dp"
         android:text="@string/add"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
