@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 class NoteRepository(private val noteDao: NotDao) {
 
-    val getAllNoatByDate: Flow<List<Note>> = noteDao.getNotesOrderdByDateAdded()
+    val getAllNoatByDate: LiveData<List<Note>> = noteDao.getNotesOrderdByDateAdded()
 
-    val getAllNoatByAddres: Flow<List<Note>> = noteDao.getNotesOrderdByDateAdded()
+    val getAllNoatByAddres: LiveData<List<Note>> = noteDao.getNotesOrderdByDateAdded()
 
     suspend fun upsertNote(note: Note){
         noteDao.upsertNote(note)

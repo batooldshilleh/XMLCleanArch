@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application): AndroidViewModel(application) {
 
-    private val getAllNoteByDate: Flow<List<Note>>
+    val getAllNoteByDate: LiveData<List<Note>>
     private val repository: NoteRepository
 
     init {

@@ -17,9 +17,9 @@ interface NotDao {
     suspend fun deleteNote(note: Note)
 
     @Query("SELECT * FROM note ORDER BY dateAdd")
-    fun getNotesOrderdByDateAdded(): Flow<List<Note>>
+    fun getNotesOrderdByDateAdded(): LiveData<List<Note>>
 
 
     @Query("SELECT * FROM note ORDER BY title ASC")
-    fun getNoteOrderdByTitle(): Flow<List<Note>>
+    fun getNoteOrderdByTitle(): LiveData<List<Note>>
 }
