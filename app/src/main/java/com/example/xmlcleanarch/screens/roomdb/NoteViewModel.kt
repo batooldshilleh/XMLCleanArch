@@ -30,4 +30,12 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
             repository.upsertNote(note)
         }
     }
+    val allNotes: LiveData<List<Note>> = repository.getAllNotes()
+    fun deleteNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteNote(note)
+        }
+    }
+
+
 }

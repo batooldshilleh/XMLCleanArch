@@ -14,5 +14,11 @@ class NoteRepository(private val noteDao: NotDao) {
     suspend fun upsertNote(note: Note){
         noteDao.upsertNote(note)
     }
+    fun getAllNotes(): LiveData<List<Note>> {
+        return noteDao.getNotesOrderdByDateAdded()
+    }
+    suspend fun deleteNote(note: Note){
+        noteDao.deleteNote(note)
+    }
 
 }
