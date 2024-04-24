@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnRoom.setOnClickListener {
             navigate("com.example.xmlcleanarch.screens.roomdb.roomActivity")
         }
+        binding.btnRetrofit.setOnClickListener {
+            navigate("com.example.xmlcleanarch.screens.retrofit.RetrofitPostActivity")
+        }
     }
     fun navigate(className: String) {
 
