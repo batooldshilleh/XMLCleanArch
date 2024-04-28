@@ -6,58 +6,76 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.adapters.roomAdapter.NoteAdapter
+import com.example.xmlcleanarch.data.roomdata.NotDao
+import com.example.xmlcleanarch.data.roomdata.NoteDatabase
 import com.example.xmlcleanarch.databinding.FragmentListBinding
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import com.example.xmlcleanarch.data.roomdata.Note
+import com.example.xmlcleanarch.factory.NoteViewModelFactory
+import com.example.xmlcleanarch.repository.roomRepository.NoteRepository
+import kotlinx.coroutines.launch
 
 
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
     private lateinit var noteViewModel: NoteViewModel
-
-
+    private lateinit var adapter: NoteAdapter
+    private lateinit var noteDao: NotDao
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
 
+        setupRecyclerView()
+        setupViewModel()
+        setupFloatingActionButton()
+        observeNoteChanges()
 
-        val adapter = NoteAdapter()
+        return binding.root
+    }
 
-        val recyclerView = binding.rvNote
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
-        noteViewModel.getAllNoteByDate.observe(viewLifecycleOwner, Observer { note ->
-            adapter.setData(note)
-        })
 
-        adapter.setOnDeleteClickListener { note ->
+    private fun setupRecyclerView() {
+        adapter = NoteAdapter { note ->
             noteViewModel.deleteNote(note)
         }
+        binding.rvNote.adapter = adapter
+        binding.rvNote.layoutManager = LinearLayoutManager(requireContext())
 
-        noteViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
-            adapter.setData(notes)
-        })
+    }
+
+    private fun setupViewModel() {
+        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
+        val factory = NoteViewModelFactory(noteDao)
+        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+
+        lifecycleScope.launch {
+            noteViewModel.getAllNoteByDate.collect { notes ->
+                adapter.setData(notes)
+
+            }
+        }
+    }
 
 
-
+    private fun setupFloatingActionButton() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addNoteFragment)
         }
+    }
 
-
-
-        return binding.root
+    private fun observeNoteChanges() {
+        lifecycleScope.launch {
+            noteViewModel.getAllNoteByDate.collect { notes ->
+                adapter.setData(notes)
+            }
+        }
     }
 
 }

@@ -11,22 +11,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.data.roomdata.Note
+import com.example.xmlcleanarch.data.roomdata.NoteDatabase
 import com.example.xmlcleanarch.databinding.FragmentAddNoteBinding
-import com.example.xmlcleanarch.databinding.FragmentListBinding
+import com.example.xmlcleanarch.factory.NoteViewModelFactory
 
 class AddNoteFragment : Fragment() {
 
 
-private lateinit var binding: FragmentAddNoteBinding
-private lateinit var noteViewModel: NoteViewModel
+    private lateinit var binding: FragmentAddNoteBinding
+    private lateinit var noteViewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddNoteBinding.inflate(inflater, container, false)
 
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
+        val factory = NoteViewModelFactory(noteDao)
+        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
         binding.btnAdd.setOnClickListener {
             insertNote()
         }
@@ -48,7 +51,7 @@ private lateinit var noteViewModel: NoteViewModel
         }
     }
 
-    private fun inputCheck(title: String, description: String): Boolean{
+    private fun inputCheck(title: String, description: String): Boolean {
         return !(TextUtils.isEmpty(title) && TextUtils.isEmpty(description))
     }
 

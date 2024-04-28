@@ -1,23 +1,18 @@
 package com.example.xmlcleanarch.repository.roomRepository
 
-import androidx.lifecycle.LiveData
 import com.example.xmlcleanarch.data.roomdata.NotDao
 import com.example.xmlcleanarch.data.roomdata.Note
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepository(private val noteDao: NotDao) {
 
-    val getAllNoatByDate: LiveData<List<Note>> = noteDao.getNotesOrderdByDateAdded()
+    val getAllNotByDate: Flow<List<Note>> = noteDao.getNotesOrderedByDateAdded()
 
-    val getAllNoatByAddres: LiveData<List<Note>> = noteDao.getNotesOrderdByDateAdded()
-
-    suspend fun upsertNote(note: Note){
+    suspend fun upsertNote(note: Note) {
         noteDao.upsertNote(note)
     }
-    fun getAllNotes(): LiveData<List<Note>> {
-        return noteDao.getNotesOrderdByDateAdded()
-    }
-    suspend fun deleteNote(note: Note){
+
+    suspend fun deleteNote(note: Note) {
         noteDao.deleteNote(note)
     }
 
