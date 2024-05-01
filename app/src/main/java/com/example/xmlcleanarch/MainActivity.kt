@@ -1,6 +1,5 @@
 package com.example.xmlcleanarch
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.xmlcleanarch.databinding.ActivityMainBinding
@@ -14,27 +13,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupListeners()
+        setupListener()
     }
 
-    private fun setupListeners() {
+    private fun setupListener() {
         binding.btnLiveData.setOnClickListener {
-            navigateToActivity(LiveDataActivity::class.java)
+            startActivity(LiveDataActivity.newIntent(this))
         }
         binding.btnRoom.setOnClickListener {
             startActivity(RoomActivity.newIntent(this))
         }
     }
-
-    private fun navigateToActivity(activityClass: Class<*>) {
-        try {
-            val intent = Intent(this@MainActivity, activityClass)
-            startActivity(intent)
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-        }
-    }
-    
-    
-
 }
