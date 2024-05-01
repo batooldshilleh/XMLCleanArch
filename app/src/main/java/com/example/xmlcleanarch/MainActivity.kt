@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.xmlcleanarch.databinding.ActivityMainBinding
+import com.example.xmlcleanarch.screens.live_data.LiveDataActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,13 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     fun setupListener() {
         binding.btnLiveData.setOnClickListener {
-            navigate("com.example.xmlcleanarch.screens.live_data.LiveDataActivity")
+            startActivity(LiveDataActivity.newIntent(this))
         }
     }
-    fun navigate(className: String) {
 
-        val intent = Intent(this@MainActivity, Class.forName(className))
-        startActivity(intent)
-
-    }
 }
