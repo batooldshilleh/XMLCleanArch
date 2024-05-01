@@ -1,5 +1,7 @@
 package com.example.xmlcleanarch.screens.live_data
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,5 +27,11 @@ class LiveDataActivity : AppCompatActivity() {
         viewModel.welcomeMessage.observe(this, Observer { message ->
             binding.tvMessage.text = message
         })
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, LiveDataActivity::class.java)
+        }
     }
 }
