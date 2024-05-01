@@ -7,6 +7,7 @@ import com.example.xmlcleanarch.databinding.ActivityMainBinding
 import com.example.xmlcleanarch.screens.live_data.LiveDataActivity
 import com.example.xmlcleanarch.screens.roomdb.RoomActivity
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,4 +34,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+    
+    
+
 }
