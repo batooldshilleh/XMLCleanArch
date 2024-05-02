@@ -42,8 +42,7 @@ class AddNoteFragment : Fragment() {
         val currentTimeMillis = System.currentTimeMillis()
 
         if (inputCheck(title, description)) {
-            val note = Note(title, description, currentTimeMillis)
-            noteViewModel.insertNote(note)
+            noteViewModel.insertNote(title, description, currentTimeMillis)
             Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addNoteFragment_to_listFragment)
         } else {

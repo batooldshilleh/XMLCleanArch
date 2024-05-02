@@ -1,17 +1,14 @@
 package com.example.xmlcleanarch.adapters.roomAdapter
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.data.roomdata.Note
 import com.example.xmlcleanarch.databinding.RecyclerviewItemBinding
 
 
-class NoteAdapter(private var onDeleteClickListener: (Note) -> Unit) :
+class NoteAdapter(private val deleteListener: NoteDeleteListener) :
     RecyclerView.Adapter<MyViewHolder>() {
 
     private var noteList = emptyList<Note>()
@@ -20,7 +17,7 @@ class NoteAdapter(private var onDeleteClickListener: (Note) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             RecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding, onDeleteClickListener)
+        return MyViewHolder(binding, deleteListener)
     }
 
     override fun getItemCount(): Int {
@@ -37,12 +34,11 @@ class NoteAdapter(private var onDeleteClickListener: (Note) -> Unit) :
         this.noteList = noteList
         this.notifyDataSetChanged()
     }
-
 }
 
 class MyViewHolder(
     private val binding: RecyclerviewItemBinding,
-    private val onDeleteClickListener: (Note) -> Unit
+    private val deleteListener: NoteDeleteListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(note: Note) {
@@ -50,22 +46,7 @@ class MyViewHolder(
         binding.tvDes.text = note.description
 
         binding.ivDelete.setOnClickListener {
-            showDeleteDialog(context = it.context, note = note)
+            deleteListener.onDeleteClick(note)
         }
-    }
-
-    private fun showDeleteDialog(context: Context, note: Note) {
-        val builder = AlertDialog.Builder(context)
-
-        builder.setTitle(R.string.delete_dialog_title)
-            .setMessage(R.string.delete_dialog_message)
-            .setPositiveButton(R.string.yes) { dialog, _ ->
-                onDeleteClickListener(note)
-                dialog.dismiss()
-            }
-            .setNegativeButton(R.string.no) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 }

@@ -21,7 +21,8 @@ class NoteViewModel(dao: NotDao) : ViewModel() {
         getAllNoteByDate = repository.getAllNotByDate
     }
 
-    fun insertNote(note: Note) {
+    fun insertNote(title: String, description: String, dateAdd: Long) {
+        val note = Note(title, description, dateAdd)
         viewModelScope.launch(Dispatchers.IO) {
             repository.upsertNote(note)
         }
