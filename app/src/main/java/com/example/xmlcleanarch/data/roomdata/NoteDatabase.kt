@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class NoteDatabase : RoomDatabase() {
-    abstract val dao: NotDao
+    abstract val dao: NoteDao
 
     companion object {
         @Volatile
@@ -31,8 +31,6 @@ abstract class NoteDatabase : RoomDatabase() {
                 INSTANCE = instance
                 return instance
             }
-
-
         }
     }
 }

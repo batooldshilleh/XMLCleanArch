@@ -53,7 +53,7 @@ class ListFragment : Fragment(), NoteDeleteListener {
         noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
 
         lifecycleScope.launch {
-            noteViewModel.getAllNoteByDate.collect { notes ->
+            noteViewModel.allNoteByDate.collect { notes ->
                 adapter.setData(notes)
 
             }
@@ -69,7 +69,7 @@ class ListFragment : Fragment(), NoteDeleteListener {
 
     private fun observeNoteChanges() {
         lifecycleScope.launch {
-            noteViewModel.getAllNoteByDate.collect { notes ->
+            noteViewModel.allNoteByDate.collect { notes ->
                 adapter.setData(notes)
             }
         }

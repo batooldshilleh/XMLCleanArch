@@ -3,22 +3,22 @@ package com.example.xmlcleanarch.screens.roomdb
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.xmlcleanarch.data.roomdata.NotDao
+import com.example.xmlcleanarch.data.roomdata.NoteDao
 import com.example.xmlcleanarch.data.roomdata.Note
 import com.example.xmlcleanarch.repository.roomRepository.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class NoteViewModel(dao: NotDao) : ViewModel() {
+class NoteViewModel(dao: NoteDao) : ViewModel() {
 
-    val getAllNoteByDate: Flow<List<Note>>
+    val allNoteByDate: Flow<List<Note>>
     private val repository: NoteRepository
 
     init {
 
         repository = NoteRepository(dao)
-        getAllNoteByDate = repository.getAllNotByDate
+        allNoteByDate = repository.allNotByDate
     }
 
     fun insertNote(title: String, description: String, dateAdd: Long) {

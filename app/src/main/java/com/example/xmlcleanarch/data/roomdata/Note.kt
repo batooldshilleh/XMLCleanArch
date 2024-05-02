@@ -9,7 +9,6 @@ data class Note(
     val description: String,
     val dateAdd: Long,
 
-
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 

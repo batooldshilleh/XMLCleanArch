@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.xmlcleanarch.R
-import com.example.xmlcleanarch.data.roomdata.Note
 import com.example.xmlcleanarch.data.roomdata.NoteDatabase
 import com.example.xmlcleanarch.databinding.FragmentAddNoteBinding
 import com.example.xmlcleanarch.factory.NoteViewModelFactory
@@ -29,7 +28,7 @@ class AddNoteFragment : Fragment() {
 
         val noteDao = NoteDatabase.getDatabase(requireContext()).dao
         val factory = NoteViewModelFactory(noteDao)
-        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
         binding.btnAdd.setOnClickListener {
             insertNote()
         }
