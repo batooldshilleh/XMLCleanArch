@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -53,10 +54,9 @@ class ListFragment : Fragment(), NoteDeleteListener {
         noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
 
         lifecycleScope.launch {
-            noteViewModel.allNoteByDate.collect { notes ->
+            noteViewModel.allNoteByDate.observe(viewLifecycleOwner, Observer { notes ->
                 adapter.setData(notes)
-
-            }
+            })
         }
     }
 
@@ -69,8 +69,10 @@ class ListFragment : Fragment(), NoteDeleteListener {
 
     private fun observeNoteChanges() {
         lifecycleScope.launch {
-            noteViewModel.allNoteByDate.collect { notes ->
-                adapter.setData(notes)
+            launch {
+                noteViewModel.allNoteByDate.observe(viewLifecycleOwner, Observer  { notes ->
+                    adapter.setData(notes)
+                })
             }
         }
     }
