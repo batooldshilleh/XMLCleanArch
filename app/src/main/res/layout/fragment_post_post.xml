@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.retrofit.PostPostFragment"
+    android:padding="12dp">
+
+    <EditText
+        android:id="@+id/etUserIDPost"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:hint="@string/user_id"
+        app:layout_constraintBottom_toTopOf="@+id/etIdPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/etIdPost"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:hint="@string/id"
+        app:layout_constraintBottom_toTopOf="@+id/etTitlePost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUserIDPost"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/etTitlePost"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:hint="@string/title"
+        app:layout_constraintBottom_toTopOf="@+id/etBodyPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etIdPost"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/etBodyPost"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:hint="@string/body"
+        app:layout_constraintBottom_toTopOf="@+id/btnPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTitlePost"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post_data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etBodyPost" />
+</androidx.constraintlayout.widget.ConstraintLayout>

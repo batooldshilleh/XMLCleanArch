@@ -13,9 +13,17 @@
     <string name="note">Enter your note</string>
     <string name="description">Description</string>
     <string name="add">Add</string>
-   <string name="note_list">List</string>
+    <string name="note_list">List</string>
     <string name="delete_dialog_title">Delete Note</string>
     <string name="delete_dialog_message">Are you sure you want to delete this note?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <!--retrofit-->
+    <string name="get_data">Get</string>
+    <string name="user_id">Enter user id</string>
+    <string name="post_data">Post</string>
+    <string name="id">Enter id</string>
+    <string name="title">Enter title</string>
+    <string name="body">Enter body</string>
 </resources>
