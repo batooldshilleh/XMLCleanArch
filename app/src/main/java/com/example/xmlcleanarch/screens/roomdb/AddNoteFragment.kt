@@ -50,7 +50,7 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun inputCheck(title: String, description: String): Boolean {
-        return !(TextUtils.isEmpty(title) && TextUtils.isEmpty(description))
+        return (TextUtils.isEmpty(title) && TextUtils.isEmpty(description)).not()
     }
 
 }
