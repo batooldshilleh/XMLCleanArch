@@ -15,26 +15,26 @@ import com.example.xmlcleanarch.databinding.FragmentAddNoteBinding
 import com.example.xmlcleanarch.factory.NoteViewModelFactory
 
 class AddNoteFragment : Fragment() {
-
-
     private lateinit var binding: FragmentAddNoteBinding
     private lateinit var noteViewModel: NoteViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddNoteBinding.inflate(inflater, container, false)
 
-        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
-        val factory = NoteViewModelFactory(noteDao)
-        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
+        initializeViewModel()
         binding.btnAdd.setOnClickListener {
             insertNote()
         }
         return binding.root
     }
 
+    private fun initializeViewModel(){
+        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
+        val factory = NoteViewModelFactory(noteDao)
+        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
+    }
     private fun insertNote() {
         val title = binding.etNote.text.toString()
         val description = binding.etDescription.text.toString()
