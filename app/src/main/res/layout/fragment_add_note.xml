@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/etNote"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:autofillHints="Note"
         android:hint="@string/note"
         android:inputType="text"
@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:autofillHints="description"
         android:hint="@string/description"
         android:inputType="text"
@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
