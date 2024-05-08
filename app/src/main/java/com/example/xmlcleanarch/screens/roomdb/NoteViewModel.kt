@@ -21,13 +21,16 @@ class NoteViewModel(dao: NoteDao) : ViewModel() {
 
     init {
         repository = NoteRepository(dao)
+        getAllNotes()
+    }
+
+    private fun getAllNotes() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.allNotByDate.collect { notes ->
                 _allNoteByDate.postValue(notes)
             }
         }
     }
-
     fun insertNote(title: String, description: String) {
         val currentTimeMillis = System.currentTimeMillis()
         val note = Note(title, description, currentTimeMillis)
