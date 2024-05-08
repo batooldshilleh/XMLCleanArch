@@ -15,33 +15,33 @@ import com.example.xmlcleanarch.databinding.FragmentAddNoteBinding
 import com.example.xmlcleanarch.factory.NoteViewModelFactory
 
 class AddNoteFragment : Fragment() {
-
-
     private lateinit var binding: FragmentAddNoteBinding
     private lateinit var noteViewModel: NoteViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddNoteBinding.inflate(inflater, container, false)
 
-        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
-        val factory = NoteViewModelFactory(noteDao)
-        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
+        initializeViewModel()
         binding.btnAdd.setOnClickListener {
             insertNote()
         }
         return binding.root
     }
 
+    private fun initializeViewModel(){
+        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
+        val factory = NoteViewModelFactory(noteDao)
+        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
+    }
     private fun insertNote() {
         val title = binding.etNote.text.toString()
         val description = binding.etDescription.text.toString()
-        val currentTimeMillis = System.currentTimeMillis()
+
 
         if (inputCheck(title, description)) {
-            noteViewModel.insertNote(title, description, currentTimeMillis)
+            noteViewModel.insertNote(title, description)
             Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addNoteFragment_to_listFragment)
         } else {
@@ -50,7 +50,7 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun inputCheck(title: String, description: String): Boolean {
-        return !(TextUtils.isEmpty(title) && TextUtils.isEmpty(description))
+        return (TextUtils.isEmpty(title) && TextUtils.isEmpty(description)).not()
     }
 
 }
