@@ -28,8 +28,9 @@ class NoteViewModel(dao: NoteDao) : ViewModel() {
         }
     }
 
-    fun insertNote(title: String, description: String, dateAdd: Long) {
-        val note = Note(title, description, dateAdd)
+    fun insertNote(title: String, description: String) {
+        val currentTimeMillis = System.currentTimeMillis()
+        val note = Note(title, description, currentTimeMillis)
         viewModelScope.launch(Dispatchers.IO) {
             repository.upsertNote(note)
         }

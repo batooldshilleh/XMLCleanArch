@@ -38,10 +38,10 @@ class AddNoteFragment : Fragment() {
     private fun insertNote() {
         val title = binding.etNote.text.toString()
         val description = binding.etDescription.text.toString()
-        val currentTimeMillis = System.currentTimeMillis()
+
 
         if (inputCheck(title, description)) {
-            noteViewModel.insertNote(title, description, currentTimeMillis)
+            noteViewModel.insertNote(title, description)
             Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addNoteFragment_to_listFragment)
         } else {
