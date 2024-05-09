@@ -12,7 +12,6 @@ import retrofit2.http.QueryMap
 interface SimpleApi {
 
     @GET("posts/1")
-    //@GET("p/1")
     suspend fun getPost(): Response<Post>
 
     @GET("posts/{postNumber}")
