@@ -1,8 +1,8 @@
 package com.example.xmlcleanarch.adapters.retrofitAdapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xmlcleanarch.data.retrofitModel.Post
 import com.example.xmlcleanarch.databinding.PostItemBinding
@@ -27,11 +27,24 @@ class PostAdapter : RecyclerView.Adapter<MyViewHolder>() {
         holder.bind(currentItem)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(postsList: List<Post>) {
-        this.postList = postsList
-        notifyDataSetChanged()
+        val oldSize = postList.size
+        postList = postsList
+        val newSize = postList.size
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = oldSize
+            override fun getNewListSize(): Int = newSize
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return postList[oldItemPosition].id == postsList[newItemPosition].id
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return postList[oldItemPosition] == postsList[newItemPosition]
+            }
+        })
+        diffResult.dispatchUpdatesTo(this)
     }
+
 }
 
 class MyViewHolder(
