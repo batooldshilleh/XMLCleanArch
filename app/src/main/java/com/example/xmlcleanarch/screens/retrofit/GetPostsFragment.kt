@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.xmlcleanarch.adapters.retrofitAdapter.PostAdapter
+import com.example.xmlcleanarch.adapters.retrofitAdapter.PostRecyclerviewAdapter
 import com.example.xmlcleanarch.databinding.FragmentGetPostsBinding
 import com.example.xmlcleanarch.factory.RetrofitFactory
 import com.example.xmlcleanarch.repository.retrofitRepository.PostRepository
@@ -19,7 +19,7 @@ class GetPostsFragment : Fragment() {
 
     private lateinit var binding: FragmentGetPostsBinding
     private lateinit var viewModel: RetrofitViewModel
-    private val postAdapter by lazy { PostAdapter() }
+    private val postAdapter by lazy { PostRecyclerviewAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

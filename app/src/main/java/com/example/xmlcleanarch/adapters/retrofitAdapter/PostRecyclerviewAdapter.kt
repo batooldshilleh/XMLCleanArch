@@ -7,22 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xmlcleanarch.data.retrofitModel.Post
 import com.example.xmlcleanarch.databinding.PostItemBinding
 
-class PostAdapter : RecyclerView.Adapter<MyViewHolder>() {
+class PostRecyclerviewAdapter : RecyclerView.Adapter<PostViewHolder>() {
 
     private var postList = emptyList<Post>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding =
             PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return MyViewHolder(binding)
+        return PostViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return postList.size
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val currentItem = postList[position]
         holder.bind(currentItem)
     }
@@ -47,7 +47,7 @@ class PostAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
 }
 
-class MyViewHolder(
+class PostViewHolder(
     private val binding: PostItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
