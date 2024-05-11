@@ -30,9 +30,9 @@ class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
         }
     }
 
-    fun getCustomPost(userId: Int, sort: String, order: String) {
+    fun getCustomPost(userId: Int) {
         viewModelScope.launch {
-            val response: Response<List<Post>> = repository.getCustomPost(userId, sort, order)
+            val response: Response<List<Post>> = repository.getCustomPost(userId, "id", "desc")
             apiResponseGetCustom.value = response
         }
     }

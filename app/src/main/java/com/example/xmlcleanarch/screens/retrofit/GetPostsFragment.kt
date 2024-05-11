@@ -51,7 +51,7 @@ class GetPostsFragment : Fragment() {
         binding.btnGet.setOnClickListener {
             val userNumber: String = binding.etUserId.text.toString()
             val userNumberInt: Int = Integer.parseInt(userNumber)
-            viewModel.getCustomPost(userNumberInt, "id", "desc")
+            viewModel.getCustomPost(userNumberInt)
 
             viewModel.apiResponseGetCustom.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
