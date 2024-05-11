@@ -26,11 +26,28 @@ class GetPostsFragment : Fragment() {
     ): View {
         binding = FragmentGetPostsBinding.inflate(inflater, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        setupViewModel()
+        setupRecyclerview()
+        btnClickListener()
+
+        return binding.root
+    }
+
+    private fun setupViewModel(){
         val repository = PostRepository()
         val viewModelFactory = RetrofitFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[RetrofitViewModel::class.java]
-        setupRecyclerview()
+    }
 
+    private fun setupRecyclerview() {
+        val recyclerView = binding.rvPosts
+
+        recyclerView.adapter = postAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+    }
+
+    private fun btnClickListener() {
         binding.btnGet.setOnClickListener {
             val userNumber: String = binding.etUserId.text.toString()
             val userNumberInt: Int = Integer.parseInt(userNumber)
@@ -45,14 +62,5 @@ class GetPostsFragment : Fragment() {
 
             }
         }
-        return binding.root
-    }
-
-    private fun setupRecyclerview() {
-        val recyclerView = binding.rvPosts
-
-        recyclerView.adapter = postAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
     }
 }
