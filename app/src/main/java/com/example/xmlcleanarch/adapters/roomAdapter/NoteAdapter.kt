@@ -1,8 +1,8 @@
 package com.example.xmlcleanarch.adapters.roomAdapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xmlcleanarch.data.roomdata.Note
 import com.example.xmlcleanarch.databinding.RecyclerviewItemBinding
@@ -29,10 +29,33 @@ class NoteAdapter(private val deleteListener: NoteDeleteListener) :
         holder.bind(currentItem)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(noteList: List<Note>) {
-        this.noteList = noteList
-        this.notifyDataSetChanged()
+    fun setData(newNoteList: List<Note>) {
+        val oldNoteListSize = noteList.size
+        val newNoteListSize = newNoteList.size
+
+        noteList = newNoteList
+
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int {
+                return oldNoteListSize
+            }
+
+            override fun getNewListSize(): Int {
+                return newNoteListSize
+            }
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return noteList[oldItemPosition].id == newNoteList[newItemPosition].id
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val oldNote = noteList[oldItemPosition]
+                val newNote = newNoteList[newItemPosition]
+                return oldNote == newNote
+            }
+        })
+
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 
