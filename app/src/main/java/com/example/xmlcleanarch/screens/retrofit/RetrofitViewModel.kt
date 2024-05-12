@@ -16,6 +16,8 @@ class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
     val apiResponseGetCustom: MutableLiveData<Response<List<Post>>> = MutableLiveData()
     private val apiResponseGetCustomMap: MutableLiveData<Response<List<Post>>> = MutableLiveData()
     val apiResponsePost: MutableLiveData<Response<Post>> = MutableLiveData()
+    val status: MutableLiveData<String> = MutableLiveData()
+    val posts: MutableLiveData<List<Post>> = MutableLiveData()
     fun getPost() {
         viewModelScope.launch {
             val response: Response<Post> = repository.getPost()
@@ -29,11 +31,20 @@ class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
             apiResponseGet.value = response
         }
     }
-
     fun getCustomPost(userId: Int) {
+        status.value = "loading"
         viewModelScope.launch {
-            val response: Response<List<Post>> = repository.getCustomPost(userId, "id", "desc")
-            apiResponseGetCustom.value = response
+            try {
+                val response: Response<List<Post>> = repository.getCustomPost(userId, "id", "desc")
+                if (response.isSuccessful) {
+                    status.value = "success"
+                    posts.value = response.body()
+                } else {
+                    status.value = "error: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                status.value = "error: ${e.message}"
+            }
         }
     }
 

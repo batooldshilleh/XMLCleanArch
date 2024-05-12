@@ -53,13 +53,20 @@ class GetPostsFragment : Fragment() {
             val userNumberInt: Int = Integer.parseInt(userNumber)
             viewModel.getCustomPost(userNumberInt)
 
-            viewModel.apiResponseGetCustom.observe(viewLifecycleOwner) { response ->
-                if (response.isSuccessful) {
-                    response.body()?.let { postAdapter.setData(it) }
-                } else {
-                    Toast.makeText(requireContext(), response.code(), Toast.LENGTH_LONG).show()
-                }
+            viewModel.status.observe(viewLifecycleOwner) { status ->
+                when (status) {
+                    "loading" -> {
 
+                    }
+                    "success" -> {
+
+                        viewModel.posts.value?.let { postAdapter.setData(it) }
+                    }
+                    else -> {
+
+                        Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
