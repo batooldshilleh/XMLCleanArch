@@ -9,22 +9,22 @@ import com.example.xmlcleanarch.databinding.RecyclerviewItemBinding
 
 
 class NoteAdapter(private val deleteListener: NoteDeleteListener) :
-    RecyclerView.Adapter<MyViewHolder>() {
+    RecyclerView.Adapter<NoteViewHolder>() {
 
     private var noteList = emptyList<Note>()
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding =
             RecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding, deleteListener)
+        return NoteViewHolder(binding, deleteListener)
     }
 
     override fun getItemCount(): Int {
         return noteList.size
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentItem = noteList[position]
         holder.bind(currentItem)
     }
@@ -59,7 +59,7 @@ class NoteAdapter(private val deleteListener: NoteDeleteListener) :
     }
 }
 
-class MyViewHolder(
+class NoteViewHolder(
     private val binding: RecyclerviewItemBinding,
     private val deleteListener: NoteDeleteListener
 ) : RecyclerView.ViewHolder(binding.root) {

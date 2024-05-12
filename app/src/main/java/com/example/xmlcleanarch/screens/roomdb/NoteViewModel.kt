@@ -5,11 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.xmlcleanarch.data.roomdata.NoteDao
 import com.example.xmlcleanarch.data.roomdata.Note
+import com.example.xmlcleanarch.data.roomdata.NoteDao
 import com.example.xmlcleanarch.repository.roomRepository.NoteRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class NoteViewModel(dao: NoteDao) : ViewModel() {
@@ -17,10 +16,9 @@ class NoteViewModel(dao: NoteDao) : ViewModel() {
     private val _allNoteByDate = MutableLiveData<List<Note>>()
     val allNoteByDate: LiveData<List<Note>> = _allNoteByDate
 
-    private val repository: NoteRepository
+    private val repository: NoteRepository = NoteRepository(dao)
 
     init {
-        repository = NoteRepository(dao)
         getAllNotes()
     }
 
@@ -31,6 +29,7 @@ class NoteViewModel(dao: NoteDao) : ViewModel() {
             }
         }
     }
+
     fun insertNote(title: String, description: String) {
         val currentTimeMillis = System.currentTimeMillis()
         val note = Note(title, description, currentTimeMillis)

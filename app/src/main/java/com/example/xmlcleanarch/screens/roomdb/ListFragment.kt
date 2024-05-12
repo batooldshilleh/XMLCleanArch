@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,7 +18,6 @@ import com.example.xmlcleanarch.data.roomdata.NoteDatabase
 import com.example.xmlcleanarch.databinding.FragmentListBinding
 import com.example.xmlcleanarch.factory.NoteViewModelFactory
 import kotlinx.coroutines.launch
-
 
 class ListFragment : Fragment(), NoteDeleteListener {
 
@@ -40,7 +38,6 @@ class ListFragment : Fragment(), NoteDeleteListener {
         return binding.root
     }
 
-
     private fun setupRecyclerView() {
         adapter = NoteAdapter(this)
         binding.rvNote.adapter = adapter
@@ -54,12 +51,11 @@ class ListFragment : Fragment(), NoteDeleteListener {
         noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
 
         lifecycleScope.launch {
-            noteViewModel.allNoteByDate.observe(viewLifecycleOwner, Observer { notes ->
+            noteViewModel.allNoteByDate.observe(viewLifecycleOwner) { notes ->
                 adapter.setData(notes)
-            })
+            }
         }
     }
-
 
     private fun setupFloatingActionButton() {
         binding.floatingActionButton.setOnClickListener {
@@ -70,9 +66,9 @@ class ListFragment : Fragment(), NoteDeleteListener {
     private fun observeNoteChanges() {
         lifecycleScope.launch {
             launch {
-                noteViewModel.allNoteByDate.observe(viewLifecycleOwner, Observer  { notes ->
+                noteViewModel.allNoteByDate.observe(viewLifecycleOwner) { notes ->
                     adapter.setData(notes)
-                })
+                }
             }
         }
     }
@@ -94,5 +90,4 @@ class ListFragment : Fragment(), NoteDeleteListener {
             }
             .show()
     }
-
 }

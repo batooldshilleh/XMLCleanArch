@@ -30,11 +30,12 @@ class AddNoteFragment : Fragment() {
         return binding.root
     }
 
-    private fun initializeViewModel(){
+    private fun initializeViewModel() {
         val noteDao = NoteDatabase.getDatabase(requireContext()).dao
         val factory = NoteViewModelFactory(noteDao)
         noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
     }
+
     private fun insertNote() {
         val title = binding.etNote.text.toString()
         val description = binding.etDescription.text.toString()
