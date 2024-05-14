@@ -15,17 +15,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/message"
-        android:layout_marginBottom="70dp"/>
+        android:layout_marginBottom="70dp" />
+
     <EditText
-    android:id="@+id/etNameEnter"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+        android:id="@+id/etNameEnter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnShowMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:hint="@string/name"
         android:layout_marginBottom="150dp"
-        android:textSize="40sp"/>
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/tvMessage"
@@ -36,5 +39,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="40dp"
-        android:text="@string/first_message"/>
+        android:text="@string/first_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

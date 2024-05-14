@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/retrofit_nav"
+    app:startDestination="@id/menueFragment">
+
+    <fragment
+        android:id="@+id/getPostsFragment"
+        android:name="com.example.xmlcleanarch.screens.retrofit.GetPostsFragment"
+        android:label="Get"
+        tools:layout="@layout/fragment_get_posts">
+        <action
+            android:id="@+id/action_getPostsFragment_to_menueFragment"
+            app:destination="@id/menueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menueFragment"
+        android:name="com.example.xmlcleanarch.screens.retrofit.MenuFragment"
+        android:label="Simple API"
+        tools:layout="@layout/fragment_menue" >
+        <action
+            android:id="@+id/action_menueFragment_to_getPostsFragment"
+            app:destination="@id/getPostsFragment" />
+        <action
+            android:id="@+id/action_menueFragment_to_postPostFragment"
+            app:destination="@id/postPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postPostFragment"
+        android:name="com.example.xmlcleanarch.screens.retrofit.PostPostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post_post">
+        <action
+            android:id="@+id/action_postPostFragment_to_menueFragment"
+            app:destination="@id/menueFragment" />
+    </fragment>
+</navigation>
