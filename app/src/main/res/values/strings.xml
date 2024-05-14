@@ -8,4 +8,14 @@
     <string name="message">Show Message</string>
     <string name="name">Enter your name</string>
     <string name="first_message">Welcome, Name</string>
+
+    <!--room-->
+    <string name="note">Enter your note</string>
+    <string name="description">Description</string>
+    <string name="add">Add</string>
+   <string name="note_list">List</string>
+    <string name="delete_dialog_title">Delete Note</string>
+    <string name="delete_dialog_message">Are you sure you want to delete this note?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

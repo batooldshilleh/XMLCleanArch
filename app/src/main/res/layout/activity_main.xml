@@ -26,14 +26,5 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLiveData"
         android:layout_margin="30dp"
         android:text="@string/room"/>
-    <Button
-        android:id="@+id/btnRetrofit"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRoom"
-        android:layout_margin="30dp"
-        android:text="@string/retrofit"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

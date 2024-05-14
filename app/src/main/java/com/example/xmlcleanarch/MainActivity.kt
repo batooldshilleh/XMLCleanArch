@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.xmlcleanarch.databinding.ActivityMainBinding
 import com.example.xmlcleanarch.screens.live_data.LiveDataActivity
+import com.example.xmlcleanarch.screens.roomdb.RoomActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnLiveData.setOnClickListener {
             startActivity(LiveDataActivity.newIntent(this))
         }
+        binding.btnRoom.setOnClickListener {
+            startActivity(RoomActivity.newIntent(this))
+        }
     }
-
 }
