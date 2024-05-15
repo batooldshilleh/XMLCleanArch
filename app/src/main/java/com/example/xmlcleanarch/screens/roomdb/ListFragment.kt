@@ -77,5 +77,4 @@ class ListFragment : Fragment(), NoteDeleteListener {
             }
             .show()
     }
-
 }
