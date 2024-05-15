@@ -8,8 +8,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.databinding.ActivityRoomBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class RoomActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class RoomActivity  : AppCompatActivity() {
 
     private lateinit var binding: ActivityRoomBinding
 
