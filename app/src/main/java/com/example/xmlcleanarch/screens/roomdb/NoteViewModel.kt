@@ -17,7 +17,6 @@ class NoteViewModel @Inject constructor(val repository: NoteRepository) : ViewMo
 
     private val _allNoteByDate = MutableLiveData<List<Note>>()
     val allNoteByDate: LiveData<List<Note>> = _allNoteByDate
-    private val repository: NoteRepository = NoteRepository(dao)
 
     public fun getAllNotes() {
         viewModelScope.launch(Dispatchers.IO) {
