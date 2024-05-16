@@ -44,7 +44,6 @@ class PostRecyclerviewAdapter : RecyclerView.Adapter<PostViewHolder>() {
         })
         diffResult.dispatchUpdatesTo(this)
     }
-
 }
 
 class PostViewHolder(

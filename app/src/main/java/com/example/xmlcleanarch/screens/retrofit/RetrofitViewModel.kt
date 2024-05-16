@@ -4,33 +4,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xmlcleanarch.data.retrofitModel.Post
-import com.example.xmlcleanarch.repository.retrofitRepository.PostRepository
+import com.example.xmlcleanarch.repository.retrofitRepository.PostRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
+@HiltViewModel
+class RetrofitViewModel @Inject constructor(private val repository: PostRepositoryImpl) : ViewModel() {
 
-    private val apiResponse: MutableLiveData<Response<Post>> = MutableLiveData()
-    private val apiResponseGet: MutableLiveData<Response<Post>> = MutableLiveData()
-    val apiResponseGetCustom: MutableLiveData<Response<List<Post>>> = MutableLiveData()
-    private val apiResponseGetCustomMap: MutableLiveData<Response<List<Post>>> = MutableLiveData()
     val apiResponsePost: MutableLiveData<Response<Post>> = MutableLiveData()
     val status: MutableLiveData<String> = MutableLiveData()
     val posts: MutableLiveData<List<Post>> = MutableLiveData()
-    fun getPost() {
-        viewModelScope.launch {
-            val response: Response<Post> = repository.getPost()
-            apiResponse.value = response
-        }
-    }
 
-    fun getPostByNumber(number: Int) {
-        viewModelScope.launch {
-            val response: Response<Post> = repository.getPostByNumber(number)
-            apiResponseGet.value = response
-        }
-    }
     fun getCustomPost(userId: Int) {
         status.value = "loading"
         viewModelScope.launch {
@@ -45,13 +32,6 @@ class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
             } catch (e: Exception) {
                 status.value = "error: ${e.message}"
             }
-        }
-    }
-
-    fun getCustomPostMap(userId: Int, options: Map<String, String>) {
-        viewModelScope.launch {
-            val response: Response<List<Post>> = repository.getCustomPostMap(userId, options)
-            apiResponseGetCustomMap.value = response
         }
     }
 
