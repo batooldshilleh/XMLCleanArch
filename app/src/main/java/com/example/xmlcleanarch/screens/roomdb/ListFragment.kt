@@ -6,35 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.adapters.roomAdapter.NoteAdapter
 import com.example.xmlcleanarch.adapters.roomAdapter.NoteDeleteListener
 import com.example.xmlcleanarch.data.roomdata.Note
-import com.example.xmlcleanarch.data.roomdata.NoteDatabase
 import com.example.xmlcleanarch.databinding.FragmentListBinding
-import com.example.xmlcleanarch.factory.NoteViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ListFragment : Fragment(), NoteDeleteListener {
 
     private lateinit var binding: FragmentListBinding
-    private lateinit var noteViewModel: NoteViewModel
+    private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-
         setupRecyclerView()
-        setupViewModel()
         setupFloatingActionButton()
         observeNoteChanges()
-
+        noteViewModel.getAllNotes()
         return binding.root
     }
 
@@ -43,18 +42,6 @@ class ListFragment : Fragment(), NoteDeleteListener {
         binding.rvNote.adapter = adapter
         binding.rvNote.layoutManager = LinearLayoutManager(requireContext())
 
-    }
-
-    private fun setupViewModel() {
-        val noteDao = NoteDatabase.getDatabase(requireContext()).dao
-        val factory = NoteViewModelFactory(noteDao)
-        noteViewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
-
-        lifecycleScope.launch {
-            noteViewModel.allNoteByDate.observe(viewLifecycleOwner) { notes ->
-                adapter.setData(notes)
-            }
-        }
     }
 
     private fun setupFloatingActionButton() {
