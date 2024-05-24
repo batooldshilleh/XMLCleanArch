@@ -28,10 +28,8 @@ class MenuFragment : Fragment() {
         binding.btnGetScreen.setOnClickListener {
             findNavController().navigate(R.id.action_menueFragment_to_getPostsFragment)
         }
-
         binding.btnPostScreen.setOnClickListener {
             findNavController().navigate(R.id.action_menueFragment_to_postPostFragment)
         }
     }
-
 }

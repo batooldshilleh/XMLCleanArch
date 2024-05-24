@@ -1,7 +1,6 @@
 package com.example.xmlcleanarch.screens.retrofit
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.xmlcleanarch.databinding.FragmentPostPostBinding
+import com.example.xmlcleanarch.util.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +22,6 @@ class PostPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostPostBinding.inflate(inflater, container, false)
-
         binding.btnPost.setOnClickListener {
 
             val userId = binding.etUserIDPost.text.toString()
@@ -30,24 +29,27 @@ class PostPostFragment : Fragment() {
             val title = binding.etTitlePost.text.toString()
             val body = binding.etBodyPost.text.toString()
 
-            val userNumberInt = userId.toIntOrNull()
-            val idInt = id.toIntOrNull()
+            viewModel.validateAndPushPost(userId, id, title, body)
+            observeViewModel()
+        }
+        return binding.root
+    }
 
-            if (userNumberInt != null && idInt != null) {
-
-                viewModel.pushPost(userNumberInt, idInt, title, body)
-
-                viewModel.apiResponsePost.observe(viewLifecycleOwner) { response ->
-                    if (response.isSuccessful) {
-                        clearEditText()
-                        Toast.makeText(
-                            requireContext(),
-                            response.code().toString(),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        Log.d("response body", response.body().toString())
-                        Log.d("response message", response.message().toString())
-                    } else {
+    private fun observeViewModel() {
+        viewModel.validationStatus.observe(viewLifecycleOwner) { validationMessage ->
+            Toast.makeText(requireContext(), validationMessage, Toast.LENGTH_LONG).show()
+        }
+        viewModel.status.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                Status.LOADING.toString() -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                }
+                Status.SUCCESS.toString() -> {
+                    binding.progressBar.visibility = View.GONE
+                    clearEditText()
+                    Toast.makeText(requireContext(), "Post successful!", Toast.LENGTH_LONG).show()
+                    viewModel.apiResponsePost.value?.let { response ->
                         Toast.makeText(
                             requireContext(),
                             response.code().toString(),
@@ -55,13 +57,15 @@ class PostPostFragment : Fragment() {
                         ).show()
                     }
                 }
-            } else {
-                Toast.makeText(requireContext(), "Please enter valid numbers", Toast.LENGTH_LONG)
-                    .show()
+                Status.ERROR.toString() -> {
+                    binding.progressBar.visibility = View.GONE
+                    viewModel.errorMessage.value?.let { error ->
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+
+                    }
+                }
             }
         }
-
-        return binding.root
     }
 
     private fun clearEditText() {

@@ -20,7 +20,6 @@ interface PostService {
         @Path("postNumber") number: Int
     ): Response<Post>
 
-
     @GET("posts")
     suspend fun getCustomPost(
         @Query("userId") userId: Int,

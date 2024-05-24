@@ -10,8 +10,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryRetrofitModule {
-
     @Binds
-
     abstract fun bindRepository(repository: PostRepositoryImpl): PostRepositoryInterface
 }
