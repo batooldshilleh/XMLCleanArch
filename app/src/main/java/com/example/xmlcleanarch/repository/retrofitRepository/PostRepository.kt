@@ -3,7 +3,7 @@ package com.example.xmlcleanarch.repository.retrofitRepository
 import com.example.xmlcleanarch.data.retrofitModel.Post
 import retrofit2.Response
 
-interface PostRepositoryInterface {
+interface PostRepository {
 
     suspend fun getPost(): Response<Post>
 

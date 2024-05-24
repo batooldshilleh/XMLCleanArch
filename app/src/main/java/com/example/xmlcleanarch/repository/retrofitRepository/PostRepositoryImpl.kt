@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class PostRepositoryImpl @Inject constructor(
     private val simplePostService: PostService
-) : PostRepositoryInterface {
+) : PostRepository {
 
     override suspend fun getPost(): Response<Post> {
         return simplePostService.getPost()

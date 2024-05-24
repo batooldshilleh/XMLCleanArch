@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xmlcleanarch.data.retrofitModel.Post
-import com.example.xmlcleanarch.repository.retrofitRepository.PostRepositoryImpl
+import com.example.xmlcleanarch.repository.retrofitRepository.PostRepository
 import com.example.xmlcleanarch.util.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class RetrofitViewModel @Inject constructor(private val repository: PostRepositoryImpl) :
+class RetrofitViewModel @Inject constructor(private val repository: PostRepository) :
     ViewModel() {
 
     val apiResponsePost: MutableLiveData<Response<Post>> = MutableLiveData()
