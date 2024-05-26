@@ -59,10 +59,17 @@ This project is an implementation of the concepts of Room Database, Retrofit API
 
 ## Installation
 
-Provide instructions on how to install your app, including any dependencies or prerequisites.
+<p align="center">
+  <P>You can clone or Dowinlode it as ZIP</P>
+  <img src="https://github.com/batooldshilleh/XMLCleanArch/assets/93814390/e4ef6a78-945b-4a68-aff3-0430a1a736e5" alt="Additional Screenshot 1" style="width:90%; " />
+  <P>After step 1 then choose Virgin Control, and then enter the URL </P>
+  <img src="https://github.com/batooldshilleh/XMLCleanArch/assets/93814390/9fd133dd-d19f-4c1c-8d21-b2a3014b0a72" alt="Additional Screenshot 2" style="width:70%; " />
+  <P>Just select to open the application, unzip it, and choose its location </P>
+  <img src="https://github.com/batooldshilleh/XMLCleanArch/assets/93814390/1e191b40-1d7a-4581-9b7c-47fbc283b8e8" alt="Additional Screenshot 2" style="width:70%; " />
+</p>
 
 ## Usage
 
-Explain how to use your app. Include any setup steps or configurations that users might need to know.
+Just run the application from Android Studio 🙃.
 
 
