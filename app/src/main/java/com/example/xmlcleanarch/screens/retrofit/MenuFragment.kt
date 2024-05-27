@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.databinding.FragmentMenueBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuFragment : Fragment() {
 
     private lateinit var binding: FragmentMenueBinding
@@ -26,10 +28,8 @@ class MenuFragment : Fragment() {
         binding.btnGetScreen.setOnClickListener {
             findNavController().navigate(R.id.action_menueFragment_to_getPostsFragment)
         }
-
         binding.btnPostScreen.setOnClickListener {
             findNavController().navigate(R.id.action_menueFragment_to_postPostFragment)
         }
     }
-
 }

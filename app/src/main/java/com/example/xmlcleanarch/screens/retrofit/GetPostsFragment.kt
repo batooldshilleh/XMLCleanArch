@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xmlcleanarch.adapters.retrofitAdapter.PostRecyclerviewAdapter
 import com.example.xmlcleanarch.databinding.FragmentGetPostsBinding
-import com.example.xmlcleanarch.factory.RetrofitFactory
-import com.example.xmlcleanarch.repository.retrofitRepository.PostRepository
+import com.example.xmlcleanarch.util.Status
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class GetPostsFragment : Fragment() {
 
     private lateinit var binding: FragmentGetPostsBinding
-    private lateinit var viewModel: RetrofitViewModel
+    private val viewModel: RetrofitViewModel by viewModels()
     private val postAdapter by lazy { PostRecyclerviewAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,45 +26,45 @@ class GetPostsFragment : Fragment() {
     ): View {
         binding = FragmentGetPostsBinding.inflate(inflater, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        setupViewModel()
+        observeViewModel()
         setupRecyclerview()
         btnClickListener()
-
         return binding.root
-    }
-
-    private fun setupViewModel(){
-        val repository = PostRepository()
-        val viewModelFactory = RetrofitFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[RetrofitViewModel::class.java]
     }
 
     private fun setupRecyclerview() {
         val recyclerView = binding.rvPosts
-
         recyclerView.adapter = postAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
     }
 
     private fun btnClickListener() {
         binding.btnGet.setOnClickListener {
             val userNumber: String = binding.etUserId.text.toString()
-            val userNumberInt: Int = Integer.parseInt(userNumber)
-            viewModel.getCustomPost(userNumberInt)
+            viewModel.validateAndGetCustomPost(userNumber)
+        }
+    }
 
-            viewModel.status.observe(viewLifecycleOwner) { status ->
-                when (status) {
-                    "loading" -> {
-
+    private fun observeViewModel() {
+        viewModel.validationStatus.observe(viewLifecycleOwner) { validationMessage ->
+            Toast.makeText(requireContext(), validationMessage, Toast.LENGTH_LONG).show()
+        }
+        viewModel.status.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                Status.LOADING.toString() -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                Status.SUCCESS.toString() -> {
+                    binding.progressBar.visibility = View.GONE
+                    viewModel.posts.value?.let {
+                        postAdapter.setData(it)
                     }
-                    "success" -> {
-
-                        viewModel.posts.value?.let { postAdapter.setData(it) }
-                    }
-                    else -> {
-
-                        Toast.makeText(requireContext(), status, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "success", Toast.LENGTH_LONG).show()
+                }
+                Status.ERROR.toString() -> {
+                    binding.progressBar.visibility = View.GONE
+                    viewModel.errorMessage.value?.let { error ->
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
                     }
                 }
             }

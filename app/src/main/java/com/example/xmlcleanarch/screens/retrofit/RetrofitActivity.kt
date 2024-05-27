@@ -8,8 +8,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.xmlcleanarch.R
 import com.example.xmlcleanarch.databinding.ActivityRetrofitBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RetrofitActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRetrofitBinding
@@ -21,10 +22,7 @@ class RetrofitActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarRetrofit)
         setupActionBarWithNavController(findNavController(R.id.fargmentRetrofit))
-
-
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fargmentRetrofit)

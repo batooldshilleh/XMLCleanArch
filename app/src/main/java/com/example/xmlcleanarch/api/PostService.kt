@@ -10,7 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
-interface SimpleApi {
+interface PostService {
 
     @GET("posts/1")
     suspend fun getPost(): Response<Post>
@@ -19,7 +19,6 @@ interface SimpleApi {
     suspend fun getPostByNumber(
         @Path("postNumber") number: Int
     ): Response<Post>
-
 
     @GET("posts")
     suspend fun getCustomPost(

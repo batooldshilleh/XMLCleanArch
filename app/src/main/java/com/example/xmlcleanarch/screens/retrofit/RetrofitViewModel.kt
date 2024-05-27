@@ -5,61 +5,87 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xmlcleanarch.data.retrofitModel.Post
 import com.example.xmlcleanarch.repository.retrofitRepository.PostRepository
+import com.example.xmlcleanarch.util.Status
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class RetrofitViewModel(private val repository: PostRepository) : ViewModel() {
+@HiltViewModel
+class RetrofitViewModel @Inject constructor(private val repository: PostRepository) :
+    ViewModel() {
 
-    private val apiResponse: MutableLiveData<Response<Post>> = MutableLiveData()
-    private val apiResponseGet: MutableLiveData<Response<Post>> = MutableLiveData()
-    val apiResponseGetCustom: MutableLiveData<Response<List<Post>>> = MutableLiveData()
-    private val apiResponseGetCustomMap: MutableLiveData<Response<List<Post>>> = MutableLiveData()
     val apiResponsePost: MutableLiveData<Response<Post>> = MutableLiveData()
     val status: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
     val posts: MutableLiveData<List<Post>> = MutableLiveData()
-    fun getPost() {
-        viewModelScope.launch {
-            val response: Response<Post> = repository.getPost()
-            apiResponse.value = response
+    val validationStatus: MutableLiveData<String> = MutableLiveData()
+
+    fun validateAndGetCustomPost(userId: String) {
+        if (userId.isEmpty()) {
+            validationStatus.value = "User ID must be filled"
+            return
         }
+        val userNumberInt = userId.toIntOrNull()
+        if (userNumberInt == null) {
+            validationStatus.value = "Please enter a valid number"
+            return
+        }
+        getCustomPost(userNumberInt)
     }
 
-    fun getPostByNumber(number: Int) {
-        viewModelScope.launch {
-            val response: Response<Post> = repository.getPostByNumber(number)
-            apiResponseGet.value = response
-        }
-    }
-    fun getCustomPost(userId: Int) {
-        status.value = "loading"
+    private fun getCustomPost(userId: Int) {
+        status.value = Status.LOADING.toString()
         viewModelScope.launch {
             try {
                 val response: Response<List<Post>> = repository.getCustomPost(userId, "id", "desc")
                 if (response.isSuccessful) {
-                    status.value = "success"
+                    status.value = Status.SUCCESS.toString()
                     posts.value = response.body()
                 } else {
-                    status.value = "error: ${response.code()}"
+                    status.value = Status.ERROR.toString()
+                    errorMessage.value = "Error: ${response.code()}"
                 }
             } catch (e: Exception) {
-                status.value = "error: ${e.message}"
+                status.value = Status.ERROR.toString()
+                errorMessage.value = "Error: ${e.message}"
             }
         }
     }
 
-    fun getCustomPostMap(userId: Int, options: Map<String, String>) {
-        viewModelScope.launch {
-            val response: Response<List<Post>> = repository.getCustomPostMap(userId, options)
-            apiResponseGetCustomMap.value = response
+    fun validateAndPushPost(userId: String, id: String, title: String, body: String) {
+        if (userId.isEmpty() || id.isEmpty() || title.isEmpty() || body.isEmpty()) {
+            validationStatus.value = "All fields must be filled"
+            return
         }
+        val userNumberInt = userId.toIntOrNull()
+        val idInt = id.toIntOrNull()
+
+        if (userNumberInt == null || idInt == null) {
+            validationStatus.value = "Please enter valid numbers"
+            return
+        }
+        pushPost(userNumberInt, idInt, title, body)
     }
 
-    fun pushPost(userNumberInt: Int, idInt: Int, title: String, body: String) {
-        val post = Post(userNumberInt, idInt, title, body)
+    private fun pushPost(userNumber: Int, id: Int, title: String, body: String) {
+        val post = Post(userNumber, id, title, body)
+        status.value = Status.LOADING.toString()
         viewModelScope.launch {
-            val response: Response<Post> = repository.pushPost(post)
-            apiResponsePost.value = response
+            try {
+                val response: Response<Post> = repository.pushPost(post)
+                if (response.isSuccessful) {
+                    status.value = Status.SUCCESS.toString()
+                    apiResponsePost.value = response
+                } else {
+                    status.value = Status.ERROR.toString()
+                    errorMessage.value = "Error: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                status.value = Status.ERROR.toString()
+                errorMessage.value = "Error: ${e.message}"
+            }
         }
     }
 

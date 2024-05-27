@@ -9,12 +9,11 @@ import com.example.xmlcleanarch.databinding.PostItemBinding
 
 class PostRecyclerviewAdapter : RecyclerView.Adapter<PostViewHolder>() {
 
-    private var postList = emptyList<Post>()
+    private var postList = mutableListOf<Post>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding =
             PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return PostViewHolder(binding)
     }
 
@@ -28,23 +27,11 @@ class PostRecyclerviewAdapter : RecyclerView.Adapter<PostViewHolder>() {
     }
 
     fun setData(postsList: List<Post>) {
-        val oldSize = postList.size
-        postList = postsList
-        val newSize = postList.size
-        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize(): Int = oldSize
-            override fun getNewListSize(): Int = newSize
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return postList[oldItemPosition].id == postsList[newItemPosition].id
-            }
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return postList[oldItemPosition] == postsList[newItemPosition]
-            }
-        })
+        val diffResult = DiffUtil.calculateDiff(PostDiffCallback(postList, postsList))
+        postList.clear()
+        postList.addAll(postsList)
         diffResult.dispatchUpdatesTo(this)
     }
-
 }
 
 class PostViewHolder(
@@ -55,6 +42,5 @@ class PostViewHolder(
         binding.tvId.text = post.id.toString()
         binding.tvTitleText.text = post.title
         binding.tvBody.text = post.body
-
     }
 }
